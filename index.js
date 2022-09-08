@@ -9,7 +9,7 @@ import { checkAuth, handleValidationErrors } from './utils/index.js';
 
 
 mongoose
-    .connect('mongodb+srv://mrbondislav:root@cluster0.vxvl5.mongodb.net/blog?retryWrites=true&w=majority')
+    .connect(process.env.MONGODB_URI)
     .then(() => console.log('DB OK'))
     .catch((err) => console.log('DB error', err))
 
@@ -52,7 +52,7 @@ app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update);
 app.get('/tags', PostController.getLastTags);
 
-app.listen(3333, (err) => {
+app.listen(process.env.PORT || 3333, (err) => {
     if (err) {
         return console.log(err);
     }
